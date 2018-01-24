@@ -1,0 +1,79 @@
+<div class="todo-form">
+    <div class="todo-filed">
+        <mat-form-field class="todo-filed__wrap">
+            <input matInput placeholder="your todo" [(ngModel)]="todo" (keyup.enter)="addTodo(todo)">
+        </mat-form-field>
+
+        <mat-form-field class="todo-filed__wrap">
+            <textarea matInput matTextareaAutosize [(ngModel)]="todoDescr" placeholder="add description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class=todo-filed__wrap [textMask]="{mask: mask}">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="todoDate" placeholder="Choose a date" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <button
+            matTooltip="Add Todo!"
+            mat-fab
+            color="primary"
+            (click)="addTodo(todo, todoDescr, todoDate)"
+            [disabled]="!todo"
+            *ngIf="!editing">
+        <mat-icon>add</mat-icon>
+    </button>
+
+<button
+        (click)="updateTodo(todo,todoDescr, todoDate)"
+        *ngIf="editing">
+    Update
+</button>
+<button
+        (click)="cancelEdit()"
+        *ngIf="editing">
+    Cancel
+</button>
+</div>
+
+
+<ul class="todo-list" [sortablejs]="state"  [sortablejsOptions]='eventOptions'>
+    <li     class="todo"
+            *ngFor="let todo of state  let i = index;"
+            [ngClass]="{'todo--done': todo.done, 'todo--is-over': toDate(todo.date) < currentTime, 'todo--close-date': toDate(todo.date).getDate()  - currentTime.getDate() <= 3 &&  toDate(todo.date) > currentTime}"
+            (click)="showTodoData(todo.id)"
+    >
+
+            <div class="todo__left-wrap">
+                <div class="todo__checkbox" (click)="toggleDone(todo, i)">
+                    <i  class="fa"
+                        [ngClass]="{'fa-check-square': todo.done, 'fa-square-o': !todo.done}"
+                        aria-hidden="true">
+                    </i>
+                </div>
+                <span class="todo__name">{{ todo.value }}</span>
+            </div>
+
+            <div class="todo__right-wrap">
+                <span class="todo__date">{{todo.stringDate}}</span>
+                <div class="todo__btns">
+                    <button
+                            matTooltip="Change todo"
+                            (click)="editTodo(todo, i)"
+                    >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button matTooltip="Delete todo"
+                            (click)="deleteTodo(i)"
+                    >
+                        <i class="fa fa-trash" aria-hidden="true">
+
+                        </i></button>
+                </div>
+
+            </div>
+    </li>
+</ul>
+
+
