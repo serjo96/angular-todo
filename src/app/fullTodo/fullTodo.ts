@@ -16,6 +16,7 @@ import {closeFullTodo} from '../actions/todoActions';
 export class FullTodo implements OnInit {
     state = {};
     todoDate = {};
+    closeClass = false;
 
     constructor(private store: Store<any>, private _eref: ElementRef) {
         this.store.select('todoReducer').subscribe(state => {
@@ -24,10 +25,15 @@ export class FullTodo implements OnInit {
         });
     }
     onClick(event) {
-        if (!this._eref.nativeElement.contains(event.target) && event.target.className.indexOf('todo') !== 0){
-            this.store.dispatch(closeFullTodo());
+        console.log(event)
+        if (this.state.todoData.status && event.target.nodeName === 'HTML' || event.target.nodeName === 'APP-ROOT' || event.target.nodeName === 'MAIN'){
+                this.closeClass = true;
+            setTimeout(()=>{
+                this.closeClass = false
+                this.store.dispatch(closeFullTodo())
+            }, 700);
 
-        } // or some similar check
+        }
     }
 
     ngOnInit() {}

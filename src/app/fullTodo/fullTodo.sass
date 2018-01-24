@@ -10,6 +10,11 @@
 	animation-timing-function: ease-out
 
 
+.todo-aside--close
+	animation: slide-off .7s
+	animation-timing-function: ease-out
+
+
 .todo-aside__title
 	font-weight: bold
 	margin-bottom: 15px
@@ -33,3 +38,13 @@
 	100%
 		right: 0
 		opacity: 1
+
+
+@keyframes slide-off
+	0%
+		right: 0
+		opacity: 1
+
+	100%
+		right: -250px
+		opacity: 0

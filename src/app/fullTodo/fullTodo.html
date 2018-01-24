@@ -1,6 +1,7 @@
 <div
         *ngIf="state.todoData.status"
         class="todo-aside"
+        [ngClass]="{'todo-aside--close': closeClass}"
 >
     <div class="todo-aside__title">{{todoDate.value}}</div>
     <div class="todo-aside__descr">
