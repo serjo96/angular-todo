@@ -6,6 +6,8 @@
 	height: 100%
 	background: #f2f2f2
 	padding: 20px
+	animation: slide-right .7s
+	animation-timing-function: ease-out
 
 
 .todo-aside__title
@@ -21,3 +23,13 @@
 		&:last-child
 			padding-left: 10px
 
+
+
+@keyframes slide-right
+	0%
+		right: -250px
+		opacity: 0
+
+	100%
+		right: 0
+		opacity: 1

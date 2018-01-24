@@ -36,9 +36,7 @@ export class HomeComponent implements OnInit {
         this.store.select('todoReducer').subscribe(state => this.state = state.arr);
     }
 
-    ngOnInit(){
-
-    }
+    ngOnInit(){}
 
     @HostListener('window:unload')
     doSomething() {
@@ -57,7 +55,7 @@ export class HomeComponent implements OnInit {
     }
 
     deleteTodo(index) {
-        this.store.dispatch(  deleteTodo(index)  );
+        this.store.dispatch(deleteTodo(index));
     }
 
     editTodo(todo, index) {
@@ -102,7 +100,7 @@ export class HomeComponent implements OnInit {
     };
 
 
-    toggleDone(todo, index) {
-        this.store.dispatch(doneTodo({ index, done: todo.done }));
+    toggleDone(todo) {
+        this.store.dispatch(doneTodo({ id: todo.id, done: todo.done }));
     }
 }

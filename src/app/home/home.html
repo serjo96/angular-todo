@@ -46,7 +46,7 @@
     >
 
             <div class="todo__left-wrap">
-                <div class="todo__checkbox" (click)="toggleDone(todo, i)">
+                <div class="todo__checkbox" (click)="toggleDone(todo)">
                     <i  class="fa"
                         [ngClass]="{'fa-check-square': todo.done, 'fa-square-o': !todo.done}"
                         aria-hidden="true">
