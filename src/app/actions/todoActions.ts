@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, UPDATE_TODO, TOGGLE_DONE, UPDATE_TODO_LIST, SHOW_FULL_TODO, CLOSE_FULL_TODO } from '../constants/constants';
+import { ADD_TODO, DELETE_TODO, UPDATE_TODO, TOGGLE_DONE, UPDATE_TODO_LIST, SHOW_FULL_TODO, CLOSE_FULL_TODO, CHANGE_TODO_DATA } from '../constants/constants';
 
 export function addTODO(payload) {
     return {
@@ -42,6 +42,13 @@ export function showFullTodo(payload) {
 export function closeFullTodo() {
     return {
         type: CLOSE_FULL_TODO
+    };
+}
+
+export function changeTodoData(value){
+    return {
+        type: CHANGE_TODO_DATA,
+        value
     };
 }
 

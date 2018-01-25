@@ -8,8 +8,8 @@
             <textarea matInput matTextareaAutosize [(ngModel)]="todoDescr" placeholder="add description"></textarea>
         </mat-form-field>
 
-        <mat-form-field class=todo-filed__wrap [textMask]="{mask: mask}">
-            <input matInput [matDatepicker]="picker" [(ngModel)]="todoDate" placeholder="Choose a date" >
+        <mat-form-field class=todo-filed__wrap [textMask]="{mask: mask, placeholderChar: '\u2000'}">
+            <input matInput [matDatepicker]="picker"  [(ngModel)]="todoDate" placeholder="Choose a date" >
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>

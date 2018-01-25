@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import {ADD_TODO, DELETE_TODO, UPDATE_TODO, TOGGLE_DONE, UPDATE_TODO_LIST, SHOW_FULL_TODO, CLOSE_FULL_TODO} from '../constants/constants'
+import {ADD_TODO, DELETE_TODO, UPDATE_TODO, TOGGLE_DONE, UPDATE_TODO_LIST, SHOW_FULL_TODO, CLOSE_FULL_TODO, CHANGE_TODO_DATA} from '../constants/constants'
 
 
 
@@ -23,7 +23,7 @@ export function todoReducer(state = initialState, action) {
                     : item;
             })};
         case TOGGLE_DONE:
-            return {...state, arr:state.arr.map((item, index) => {
+            return {...state, arr:state.arr.map((item) => {
                 return item.id === action.payload.id
                     ? Object.assign({}, item, { done: !action.payload.done })
                     : item;
@@ -36,7 +36,16 @@ export function todoReducer(state = initialState, action) {
             return {...state, todoData: {id: action.payload, status: true} };
 
         case CLOSE_FULL_TODO:
-                    return {...state, todoData: {id: 0, status: false} };
+            return {...state, todoData: {...state.todoData, status: false} };
+
+        case CHANGE_TODO_DATA:
+            return  {...state, arr: state.arr.map((item) => {
+                return item.id === action.value.id
+                    ? {...item, [action.value.name]: action.value[action.value.name], stringDate: action.value.stringDate ? action.value.stringDate : item.stringDate}
+                    : item;
+                })};
+
+
 
         default:
             return state;

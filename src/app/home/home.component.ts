@@ -1,9 +1,10 @@
-import { Component, OnInit, HostListener  } from '@angular/core';
+import { Component, HostListener  } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SortablejsOptions } from 'angular-sortablejs';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
 
 import {addTODO, deleteTodo, doneTodo, updateTodo, updateList, showFullTodo} from '../actions/todoActions';
@@ -21,7 +22,7 @@ import {addTODO, deleteTodo, doneTodo, updateTodo, updateList, showFullTodo} fro
         {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
     ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
     todo: string;
     todoDescr: string;
     todoDate: string;
@@ -36,8 +37,6 @@ export class HomeComponent implements OnInit {
         this.store.select('todoReducer').subscribe(state => this.state = state.arr);
     }
 
-    ngOnInit(){}
-
     @HostListener('window:unload')
     doSomething() {
         localStorage.setItem('todoList', JSON.stringify(this.state));
@@ -45,13 +44,12 @@ export class HomeComponent implements OnInit {
 
 
     addTodo(value, description, date) {
-        let stringDate = moment(date).locale("ru").format("DDD MMMM YYYY");
+        let stringDate = moment(date).locale("ru").format("DD MMMM YYYY");
         this.todoID = Math.floor(Math.random() * 5000);
         this.store.dispatch(addTODO({ value, description, date, stringDate, id: this.todoID, done: false }));
         this.todo = '';
         this.todoDate = '';
         this.todoDescr = '';
-
     }
 
     deleteTodo(index) {
@@ -73,7 +71,8 @@ export class HomeComponent implements OnInit {
     }
 
     updateTodo(value, description, date) {
-        let stringDate = moment(date).locale("ru").format("DDD MMMM YYYY");
+        let stringDate = moment(date).locale("ru").format("DD MMMM YYYY");
+        console.log(date)
         this.store.dispatch(updateTodo({ index: this.indexToEdit, newValue: {value, description, date, stringDate} }) );
         this.todo = '';
         this.todoDate = '';
@@ -94,8 +93,7 @@ export class HomeComponent implements OnInit {
     eventOptions: SortablejsOptions = {
         onUpdate: () =>   {
             let arr = this.state;
-            this.store.dispatch(updateList(arr))
-
+            this.store.dispatch(updateList(arr));
         }
     };
 
